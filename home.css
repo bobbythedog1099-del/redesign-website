@@ -130,6 +130,11 @@ body.home {
   object-fit: cover;
 }
 
+.viewfinder-video:fullscreen {
+  background: #000;
+  object-fit: contain;
+}
+
 .viewfinder-frame {
   --corner: linear-gradient(var(--ink), var(--ink));
   --top-corner: linear-gradient(var(--top-ink), var(--top-ink));
@@ -272,10 +277,35 @@ body.home {
 }
 
 .camera-controls {
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .4rem;
   margin-inline: 2.5%;
   font-size: clamp(.63rem, 2.4cqi, 1.4rem);
   font-weight: 700;
+}
+
+.camera-fullscreen {
+  min-height: 36px;
+  padding: .45em .85em;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  background: #100b09a8;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.camera-fullscreen-status {
+  margin: .35em 2.5% 0;
+  font-size: clamp(.68rem, 2cqi, 1rem);
+  text-align: right;
+}
+
+.camera-fullscreen-status:empty {
+  display: none;
 }
 
 .camera-navigation {
@@ -360,61 +390,19 @@ body.home {
   display: none;
 }
 
-.photo-row.is-moving {
-  overflow: hidden;
-}
-
-.is-moving .photo-repeat[hidden] {
-  display: block;
-}
-
-.is-moving .photo-track {
-  -webkit-animation: photo-marquee 75s linear infinite;
-  animation: photo-marquee 75s linear infinite;
-}
-
-.photo-row--right.is-moving .photo-track {
-  -webkit-animation-direction: reverse;
-  animation-direction: reverse;
-}
-
-.photo-row:has(.photo-open:focus-visible) .photo-track {
-  animation-play-state: paused;
-}
-
-@media (hover: hover) {
-  .photo-row:hover .photo-track {
-    animation-play-state: paused;
+@media (prefers-reduced-motion: no-preference) {
+  .photo-row.is-looping .photo-repeat[hidden] {
+    display: block;
   }
 }
 
-@-webkit-keyframes photo-marquee {
-  from { -webkit-transform: translate3d(0, 0, 0); }
-  to { -webkit-transform: translate3d(-50%, 0, 0); }
+.photo-row.is-dragging,
+.photo-row.is-dragging .photo-open {
+  cursor: grabbing;
 }
 
-@keyframes photo-marquee {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(-50%, 0, 0);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .photo-row.is-moving {
-    overflow-x: auto;
-  }
-
-  .is-moving .photo-repeat[hidden] {
-    display: none;
-  }
-
-  .is-moving .photo-track {
-    -webkit-animation: none;
-    animation: none;
-  }
+.photo-strip img {
+  user-select: none;
 }
 
 .photo-strip li {
@@ -522,19 +510,33 @@ body.home {
 }
 
 .photo-dialog {
-  width: min(88vw, 42rem);
-  height: min(65vh, 32rem);
-  padding: .75rem;
+  width: min(92vw, 58rem);
+  max-height: 90vh;
+  max-height: 90dvh;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  padding: clamp(.9rem, 2.8vw, 1.75rem);
   border: 0;
-  border-radius: .85rem;
+  border-radius: clamp(1.1rem, 4vw, 2.5rem);
   background: #fff;
+  color: #15110e;
 }
 
 .photo-dialog::backdrop {
-  background: #0009;
+  background: rgb(0 0 0 / .57);
+  backdrop-filter: blur(5px);
 }
 
-.photo-dialog button {
+.photo-dialog-close {
+  position: sticky;
+  z-index: 1;
+  top: 0;
+  height: 0;
+  margin: 0;
+  pointer-events: none;
+}
+
+.photo-dialog-close button {
   display: block;
   min-width: 44px;
   min-height: 44px;
@@ -542,10 +544,69 @@ body.home {
   padding: 0;
   border: 0;
   border-radius: 50%;
-  background: #f4f2ef;
-  color: #15110e;
-  font-size: 1.5rem;
+  background: #fff;
+  color: inherit;
+  font: 300 clamp(1.8rem, 4vw, 2.8rem)/1 Arial, Helvetica, sans-serif;
   cursor: pointer;
+  pointer-events: auto;
+}
+
+.photo-dialog-header {
+  padding: .3rem clamp(.2rem, 2.1vw, 1.5rem) clamp(1rem, 3.8vw, 2.5rem);
+}
+
+.photo-dialog-brand,
+.photo-dialog h2 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  letter-spacing: -.045em;
+}
+
+.photo-dialog-brand {
+  padding-right: 44px;
+  font-size: clamp(1.45rem, 4.6vw, 2.9rem);
+  line-height: .95;
+}
+
+.photo-dialog-brand em {
+  display: block;
+  margin-top: .18em;
+  font-size: .63em;
+}
+
+.photo-dialog h2 {
+  margin-top: clamp(1.35rem, 4.6vw, 3rem);
+  font-size: clamp(2.05rem, 9vw, 5.5rem);
+  line-height: .96;
+}
+
+.photo-dialog-meta,
+.photo-dialog-description {
+  margin: .75em 0 0;
+  font-size: clamp(.9rem, 3.1vw, 1.7rem);
+  line-height: 1.4;
+}
+
+.photo-dialog-description::before {
+  display: block;
+  width: clamp(2.5rem, 9vw, 5.25rem);
+  margin: 1em 0 .85em;
+  border-top: 2px solid #ddbb84;
+  content: "";
+}
+
+.photo-dialog-gallery {
+  display: grid;
+  gap: clamp(.7rem, 2.4vw, 1.5rem);
+}
+
+.photo-dialog-gallery img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: clamp(.75rem, 3vw, 1.75rem);
+  background: #f5f2ee;
 }
 
 .booking-prints {
