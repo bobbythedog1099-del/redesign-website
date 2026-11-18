@@ -87,50 +87,10 @@ window.addEventListener("load", () => {
   bookingPrints.classList.add("is-printing");
 }, { once: true });
 
-const filmstrip = document.querySelector("#photo-strip");
-const filmToggle = document.querySelector(".film-toggle");
-const filmMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-let filmTimer;
-
-function pauseFilmstrip() {
-  window.clearInterval(filmTimer);
-  filmTimer = undefined;
-  filmToggle.textContent = "Play filmstrip";
-}
-
-function startFilmstrip() {
-  if (filmMotion.matches || filmTimer !== undefined) return;
-
-  filmToggle.textContent = "Pause filmstrip";
-  filmTimer = window.setInterval(() => {
-    const bounds = filmstrip.getBoundingClientRect();
-    if (document.hidden || bounds.bottom <= 0 || bounds.top >= window.innerHeight) return;
-
-    const first = filmstrip.children[0];
-    const nextColumn = filmstrip.children[2];
-    const end = filmstrip.scrollWidth - filmstrip.clientWidth;
-    if (filmstrip.scrollLeft >= end - 2) {
-      filmstrip.scrollTo({ left: 0, behavior: "instant" });
-      return;
-    }
-    filmstrip.scrollBy({ left: nextColumn.offsetLeft - first.offsetLeft });
-  }, 3000);
-}
-
-filmToggle.addEventListener("click", () => {
-  if (filmTimer === undefined) startFilmstrip();
-  else pauseFilmstrip();
+document.querySelectorAll(".photo-row").forEach((row) => {
+  const track = row.querySelector(".photo-track");
+  const copy = track.firstElementChild.cloneNode(true);
+  copy.setAttribute("aria-hidden", "true");
+  track.append(copy);
+  row.classList.add("is-moving");
 });
-
-["focus", "pointerdown", "wheel"].forEach((event) => {
-  filmstrip.addEventListener(event, pauseFilmstrip, { passive: true });
-});
-
-function updateFilmMotion() {
-  filmToggle.hidden = filmMotion.matches;
-  if (filmMotion.matches) pauseFilmstrip();
-  else startFilmstrip();
-}
-
-filmMotion.addEventListener("change", updateFilmMotion);
-updateFilmMotion();
