@@ -5,7 +5,6 @@ const previous = document.querySelector(".camera-prev");
 const next = document.querySelector(".camera-next");
 const captionTitle = document.querySelector(".camera-caption h2");
 const captionDescription = document.querySelector(".camera-caption p");
-const cameraId = document.querySelector(".camera-id");
 const count = document.querySelector(".camera-count");
 const time = document.querySelector(".camera-time");
 let activeIndex = 0;
@@ -40,7 +39,6 @@ function showVideo(index) {
   track.style.setProperty("--slide-offset", `${-100 * activeIndex}%`);
   captionTitle.textContent = video.ariaLabel;
   captionDescription.textContent = video.dataset.caption;
-  cameraId.textContent = `Marvin Cam / ${number}`;
   count.textContent = `${number} / ${formatNumber(videos.length)}`;
   previous.setAttribute("aria-disabled", String(activeIndex === 0));
   next.setAttribute("aria-disabled", String(activeIndex === videos.length - 1));
@@ -88,3 +86,51 @@ bookingPrints.querySelectorAll(".booking-print").forEach((print) => {
 window.addEventListener("load", () => {
   bookingPrints.classList.add("is-printing");
 }, { once: true });
+
+const filmstrip = document.querySelector("#photo-strip");
+const filmToggle = document.querySelector(".film-toggle");
+const filmMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+let filmTimer;
+
+function pauseFilmstrip() {
+  window.clearInterval(filmTimer);
+  filmTimer = undefined;
+  filmToggle.textContent = "Play filmstrip";
+}
+
+function startFilmstrip() {
+  if (filmMotion.matches || filmTimer !== undefined) return;
+
+  filmToggle.textContent = "Pause filmstrip";
+  filmTimer = window.setInterval(() => {
+    const bounds = filmstrip.getBoundingClientRect();
+    if (document.hidden || bounds.bottom <= 0 || bounds.top >= window.innerHeight) return;
+
+    const first = filmstrip.children[0];
+    const nextColumn = filmstrip.children[2];
+    const end = filmstrip.scrollWidth - filmstrip.clientWidth;
+    if (filmstrip.scrollLeft >= end - 2) {
+      filmstrip.scrollTo({ left: 0, behavior: "instant" });
+      return;
+    }
+    filmstrip.scrollBy({ left: nextColumn.offsetLeft - first.offsetLeft });
+  }, 3000);
+}
+
+filmToggle.addEventListener("click", () => {
+  if (filmTimer === undefined) startFilmstrip();
+  else pauseFilmstrip();
+});
+
+["focus", "pointerdown", "wheel"].forEach((event) => {
+  filmstrip.addEventListener(event, pauseFilmstrip, { passive: true });
+});
+
+function updateFilmMotion() {
+  filmToggle.hidden = filmMotion.matches;
+  if (filmMotion.matches) pauseFilmstrip();
+  else startFilmstrip();
+}
+
+filmMotion.addEventListener("change", updateFilmMotion);
+updateFilmMotion();
