@@ -88,9 +88,16 @@ window.addEventListener("load", () => {
 }, { once: true });
 
 document.querySelectorAll(".photo-row").forEach((row) => {
-  const track = row.querySelector(".photo-track");
-  const copy = track.firstElementChild.cloneNode(true);
-  copy.setAttribute("aria-hidden", "true");
-  track.append(copy);
+  const strip = row.querySelector(".photo-strip");
+  const copies = document.createDocumentFragment();
+  Array.from(strip.children).forEach((photo) => {
+    const copy = photo.cloneNode(true);
+    copy.hidden = true;
+    copy.classList.add("photo-repeat");
+    copy.setAttribute("aria-hidden", "true");
+    copy.style.setProperty("--tilt", getComputedStyle(photo).getPropertyValue("--tilt"));
+    copies.append(copy);
+  });
+  strip.append(copies);
   row.classList.add("is-moving");
 });

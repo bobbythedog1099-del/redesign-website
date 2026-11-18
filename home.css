@@ -322,13 +322,16 @@ body.home {
 
 .photo-collage {
   --photo-gap: clamp(10px, 2.4vw, 22px);
+  --collage-width: min(100vw, 960px);
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   container-type: inline-size;
   gap: clamp(4px, 1.1vw, 12px);
   padding-block: clamp(10px, 2.6vw, 25px);
 }
 
 .photo-row {
+  min-width: 0;
   overflow-x: auto;
   overscroll-behavior-inline: contain;
   scrollbar-width: thin;
@@ -337,53 +340,74 @@ body.home {
 
 .photo-track {
   display: flex;
+  flex-wrap: nowrap;
   width: max-content;
 }
 
 .photo-strip {
   display: flex;
   flex: none;
+  flex-wrap: nowrap;
   gap: var(--photo-gap);
   margin: 0;
   padding: clamp(10px, 2vw, 18px) var(--photo-gap) clamp(10px, 2vw, 18px) 0;
   list-style: none;
 }
 
-.photo-strip[aria-hidden="true"] {
+.photo-repeat[hidden] {
   display: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .photo-row.is-moving {
-    overflow: clip;
-  }
+.photo-row.is-moving {
+  overflow: hidden;
+}
 
-  .is-moving .photo-strip[aria-hidden="true"] {
-    display: flex;
-  }
+.is-moving .photo-repeat[hidden] {
+  display: block;
+}
 
-  .is-moving .photo-track {
-    animation: photo-marquee 75s linear infinite;
-  }
+.is-moving .photo-track {
+  -webkit-animation: photo-marquee 75s linear infinite;
+  animation: photo-marquee 75s linear infinite;
+}
 
-  .photo-row--right.is-moving .photo-track {
-    animation-direction: reverse;
-  }
+.photo-row--right.is-moving .photo-track {
+  -webkit-animation-direction: reverse;
+  animation-direction: reverse;
+}
 
+@-webkit-keyframes photo-marquee {
+  from { -webkit-transform: translate3d(0, 0, 0); }
+  to { -webkit-transform: translate3d(-50%, 0, 0); }
 }
 
 @keyframes photo-marquee {
   from {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
   to {
-    transform: translateX(-50%);
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .photo-row.is-moving {
+    overflow-x: auto;
+  }
+
+  .is-moving .photo-repeat[hidden] {
+    display: none;
+  }
+
+  .is-moving .photo-track {
+    -webkit-animation: none;
+    animation: none;
   }
 }
 
 .photo-strip li {
   --tilt: 3deg;
-  --photo-width: calc((100cqi - 3 * var(--photo-gap)) / 4);
+  --photo-width: calc((var(--collage-width) - 3 * var(--photo-gap)) / 4);
   flex: 0 0 auto;
   width: var(--photo-width);
   aspect-ratio: .9;
@@ -391,6 +415,12 @@ body.home {
   background: linear-gradient(#fff, #f6f4f2);
   box-shadow: 0 3px 9px #281e143e;
   transform: rotate(var(--tilt));
+}
+
+@supports (width: 100cqi) {
+  .photo-strip li {
+    --photo-width: calc((100cqi - 3 * var(--photo-gap)) / 4);
+  }
 }
 
 .photo-strip li:nth-child(even) {
