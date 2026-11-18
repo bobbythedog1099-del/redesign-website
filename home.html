@@ -4,21 +4,25 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Through Our Lens | Marvin Studio</title>
-  <link rel="stylesheet" href="home.css?v=2">
-  <script src="home.js?v=2" defer></script>
+  <link rel="stylesheet" href="home.css?v=12">
+  <script src="home.js?v=5" defer></script>
 </head>
 <body class="home">
   <header class="home-header">
     <a class="home-logo" href="index.html" aria-label="Marvin Studio intro">
-      Marvin<span>studio</span>
+      <img src="assets/marvin-logo-lossless.webp" alt="Marvin Studio" width="1788" height="648">
     </a>
     <details class="home-menu">
-      <summary aria-label="Menu"><span></span><span></span><span></span></summary>
+      <summary aria-label="Navigation menu">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </summary>
       <nav aria-label="Main navigation">
-        <a href="index.html">Intro</a>
         <a href="#through-our-lens">Through Our Lens</a>
-        <a href="#photo-strip">Event photos</a>
+        <a href="#photo-strip">Event Photos</a>
         <a href="#booking">Booking</a>
+        <a href="#photo-formats-title">Photo Formats</a>
       </nav>
     </details>
   </header>
@@ -64,45 +68,46 @@
         <div class="photo-row photo-row--right">
           <div class="photo-track">
             <ul class="photo-strip">
-              <li><img src="assets/home/collage/ikea/3.jpg" alt="IKEA event photo 1" loading="lazy" decoding="async"></li>
-              <li><img src="assets/home/collage/ikea/8.jpg" alt="IKEA event photo 3" loading="lazy" decoding="async"></li>
-              <li><img src="assets/home/collage/ikea/20.jpg" alt="IKEA event photo 5" loading="lazy" decoding="async"></li>
-              <li><img src="assets/home/collage/ikea/24.jpg" alt="IKEA event photo 7" loading="lazy" decoding="async"></li>
-              <li><img src="assets/home/collage/ikea/47.jpg" alt="IKEA event photo 9" loading="lazy" decoding="async"></li>
-              <li><img src="assets/home/collage/ikea/72.jpg" alt="IKEA event photo 11" loading="lazy" decoding="async"></li>
-              <li><img src="assets/home/collage/ikea/91.jpg" alt="IKEA event photo 13" loading="lazy" decoding="async"></li>
-              <li><img src="assets/home/collage/ikea/102.jpg" alt="IKEA event photo 15" loading="lazy" decoding="async"></li>
-              <li><img src="assets/home/collage/ikea/121.jpg" alt="IKEA event photo 17" loading="lazy" decoding="async"></li>
-              <li><img src="assets/home/collage/ikea/138.jpg" alt="IKEA event photo 19" loading="lazy" decoding="async"></li>
-              <li><img src="assets/home/collage/ikea/181.jpg" alt="IKEA event photo 21" loading="lazy" decoding="async"></li>
-              <li><img src="assets/home/collage/ikea/1000001906.jpg" alt="IKEA event photo 23" loading="lazy" decoding="async"></li>
-              <li><img src="assets/home/collage/ikea/IMG_8437.jpg" alt="IKEA event photo 25" loading="lazy" decoding="async"></li>
-              <li><img src="assets/home/collage/ikea/IMG_8641.jpg" alt="IKEA event photo 27" loading="lazy" decoding="async"></li>
+              <li><button class="photo-open" type="button" aria-haspopup="dialog"><img src="assets/home/collage/ikea/3.jpg" alt="IKEA event photo 1" loading="lazy" decoding="async"><span class="photo-camera" aria-hidden="true"></span></button></li>
+              <li><button class="photo-open" type="button" aria-haspopup="dialog"><img src="assets/home/collage/ikea/8.jpg" alt="IKEA event photo 3" loading="lazy" decoding="async"><span class="photo-camera" aria-hidden="true"></span></button></li>
+              <li><button class="photo-open" type="button" aria-haspopup="dialog"><img src="assets/home/collage/ikea/20.jpg" alt="IKEA event photo 5" loading="lazy" decoding="async"><span class="photo-camera" aria-hidden="true"></span></button></li>
+              <li><button class="photo-open" type="button" aria-haspopup="dialog"><img src="assets/home/collage/ikea/24.jpg" alt="IKEA event photo 7" loading="lazy" decoding="async"><span class="photo-camera" aria-hidden="true"></span></button></li>
+              <li><button class="photo-open" type="button" aria-haspopup="dialog"><img src="assets/home/collage/ikea/47.jpg" alt="IKEA event photo 9" loading="lazy" decoding="async"><span class="photo-camera" aria-hidden="true"></span></button></li>
+              <li><button class="photo-open" type="button" aria-haspopup="dialog"><img src="assets/home/collage/ikea/72.jpg" alt="IKEA event photo 11" loading="lazy" decoding="async"><span class="photo-camera" aria-hidden="true"></span></button></li>
+              <li><button class="photo-open" type="button" aria-haspopup="dialog"><img src="assets/home/collage/ikea/91.jpg" alt="IKEA event photo 13" loading="lazy" decoding="async"><span class="photo-camera" aria-hidden="true"></span></button></li>
+              <li><button class="photo-open" type="button" aria-haspopup="dialog"><img src="assets/home/collage/ikea/102.jpg" alt="IKEA event photo 15" loading="lazy" decoding="async"><span class="photo-camera" aria-hidden="true"></span></button></li>
+              <li><button class="photo-open" type="button" aria-haspopup="dialog"><img src="assets/home/collage/ikea/121.jpg" alt="IKEA event photo 17" loading="lazy" decoding="async"><span class="photo-camera" aria-hidden="true"></span></button></li>
+              <li><button class="photo-open" type="button" aria-haspopup="dialog"><img src="assets/home/collage/ikea/138.jpg" alt="IKEA event photo 19" loading="lazy" decoding="async"><span class="photo-camera" aria-hidden="true"></span></button></li>
+              <li><button class="photo-open" type="button" aria-haspopup="dialog"><img src="assets/home/collage/ikea/181.jpg" alt="IKEA event photo 21" loading="lazy" decoding="async"><span class="photo-camera" aria-hidden="true"></span></button></li>
+              <li><button class="photo-open" type="button" aria-haspopup="dialog"><img src="assets/home/collage/ikea/1000001906.jpg" alt="IKEA event photo 23" loading="lazy" decoding="async"><span class="photo-camera" aria-hidden="true"></span></button></li>
+              <li><button class="photo-open" type="button" aria-haspopup="dialog"><img src="assets/home/collage/ikea/IMG_8437.jpg" alt="IKEA event photo 25" loading="lazy" decoding="async"><span class="photo-camera" aria-hidden="true"></span></button></li>
+              <li><button class="photo-open" type="button" aria-haspopup="dialog"><img src="assets/home/collage/ikea/IMG_8641.jpg" alt="IKEA event photo 27" loading="lazy" decoding="async"><span class="photo-camera" aria-hidden="true"></span></button></li>
             </ul>
           </div>
         </div>
         <div class="photo-row photo-row--left">
           <div class="photo-track">
             <ul class="photo-strip">
-              <li><img src="assets/home/collage/ikea/4.jpg" alt="IKEA event photo 2" loading="lazy" decoding="async"></li>
-              <li><img src="assets/home/collage/ikea/17.jpg" alt="IKEA event photo 4" loading="lazy" decoding="async"></li>
-              <li><img src="assets/home/collage/ikea/21.jpg" alt="IKEA event photo 6" loading="lazy" decoding="async"></li>
-              <li><img src="assets/home/collage/ikea/40.jpg" alt="IKEA event photo 8" loading="lazy" decoding="async"></li>
-              <li><img src="assets/home/collage/ikea/55.jpg" alt="IKEA event photo 10" loading="lazy" decoding="async"></li>
-              <li><img src="assets/home/collage/ikea/81.jpg" alt="IKEA event photo 12" loading="lazy" decoding="async"></li>
-              <li><img src="assets/home/collage/ikea/100.jpg" alt="IKEA event photo 14" loading="lazy" decoding="async"></li>
-              <li><img src="assets/home/collage/ikea/104.jpg" alt="IKEA event photo 16" loading="lazy" decoding="async"></li>
-              <li><img src="assets/home/collage/ikea/123.jpg" alt="IKEA event photo 18" loading="lazy" decoding="async"></li>
-              <li><img src="assets/home/collage/ikea/179.jpg" alt="IKEA event photo 20" loading="lazy" decoding="async"></li>
-              <li><img src="assets/home/collage/ikea/257.jpg" alt="IKEA event photo 22" loading="lazy" decoding="async"></li>
-              <li><img src="assets/home/collage/ikea/IMG_8363.jpg" alt="IKEA event photo 24" loading="lazy" decoding="async"></li>
-              <li><img src="assets/home/collage/ikea/IMG_8549.jpg" alt="IKEA event photo 26" loading="lazy" decoding="async"></li>
+              <li><button class="photo-open" type="button" aria-haspopup="dialog"><img src="assets/home/collage/ikea/4.jpg" alt="IKEA event photo 2" loading="lazy" decoding="async"><span class="photo-camera" aria-hidden="true"></span></button></li>
+              <li><button class="photo-open" type="button" aria-haspopup="dialog"><img src="assets/home/collage/ikea/17.jpg" alt="IKEA event photo 4" loading="lazy" decoding="async"><span class="photo-camera" aria-hidden="true"></span></button></li>
+              <li><button class="photo-open" type="button" aria-haspopup="dialog"><img src="assets/home/collage/ikea/21.jpg" alt="IKEA event photo 6" loading="lazy" decoding="async"><span class="photo-camera" aria-hidden="true"></span></button></li>
+              <li><button class="photo-open" type="button" aria-haspopup="dialog"><img src="assets/home/collage/ikea/40.jpg" alt="IKEA event photo 8" loading="lazy" decoding="async"><span class="photo-camera" aria-hidden="true"></span></button></li>
+              <li><button class="photo-open" type="button" aria-haspopup="dialog"><img src="assets/home/collage/ikea/55.jpg" alt="IKEA event photo 10" loading="lazy" decoding="async"><span class="photo-camera" aria-hidden="true"></span></button></li>
+              <li><button class="photo-open" type="button" aria-haspopup="dialog"><img src="assets/home/collage/ikea/81.jpg" alt="IKEA event photo 12" loading="lazy" decoding="async"><span class="photo-camera" aria-hidden="true"></span></button></li>
+              <li><button class="photo-open" type="button" aria-haspopup="dialog"><img src="assets/home/collage/ikea/100.jpg" alt="IKEA event photo 14" loading="lazy" decoding="async"><span class="photo-camera" aria-hidden="true"></span></button></li>
+              <li><button class="photo-open" type="button" aria-haspopup="dialog"><img src="assets/home/collage/ikea/104.jpg" alt="IKEA event photo 16" loading="lazy" decoding="async"><span class="photo-camera" aria-hidden="true"></span></button></li>
+              <li><button class="photo-open" type="button" aria-haspopup="dialog"><img src="assets/home/collage/ikea/123.jpg" alt="IKEA event photo 18" loading="lazy" decoding="async"><span class="photo-camera" aria-hidden="true"></span></button></li>
+              <li><button class="photo-open" type="button" aria-haspopup="dialog"><img src="assets/home/collage/ikea/179.jpg" alt="IKEA event photo 20" loading="lazy" decoding="async"><span class="photo-camera" aria-hidden="true"></span></button></li>
+              <li><button class="photo-open" type="button" aria-haspopup="dialog"><img src="assets/home/collage/ikea/257.jpg" alt="IKEA event photo 22" loading="lazy" decoding="async"><span class="photo-camera" aria-hidden="true"></span></button></li>
+              <li><button class="photo-open" type="button" aria-haspopup="dialog"><img src="assets/home/collage/ikea/IMG_8363.jpg" alt="IKEA event photo 24" loading="lazy" decoding="async"><span class="photo-camera" aria-hidden="true"></span></button></li>
+              <li><button class="photo-open" type="button" aria-haspopup="dialog"><img src="assets/home/collage/ikea/IMG_8549.jpg" alt="IKEA event photo 26" loading="lazy" decoding="async"><span class="photo-camera" aria-hidden="true"></span></button></li>
             </ul>
           </div>
         </div>
       </section>
 
       <section class="booking-prints" id="booking" aria-label="Booking">
+        <span class="booking-midpoint" aria-hidden="true"></span>
         <div class="print-slot">
           <button class="booking-print" type="button" data-booking="Book a Session">
             <img src="assets/home/print-session.jpg" alt="">
@@ -116,8 +121,40 @@
           </button>
         </div>
       </section>
+
+      <section class="photo-formats" aria-labelledby="photo-formats-title">
+        <h2 id="photo-formats-title">Photo <em>Formats</em></h2>
+
+        <div class="photo-formats-row photo-formats-row--xl">
+          <img src="assets/product/xl-strip.png" alt="Model holding an oversized four-pose strip by its clear handle" width="854" height="1564" loading="lazy" decoding="async">
+          <div class="photo-formats-copy">
+            <h3>XL Strip</h3>
+            <p>Four poses in one oversized strip.</p>
+          </div>
+        </div>
+
+        <div class="photo-formats-row photo-formats-row--reverse">
+          <div class="photo-formats-copy">
+            <h3>Mini Tote</h3>
+            <p>Two photos in a clear carry tote.</p>
+          </div>
+          <img src="assets/product/mini-tote.png" alt="Model holding a clear mini tote with two photos inside" width="817" height="1595" loading="lazy" decoding="async">
+        </div>
+
+        <div class="photo-formats-row photo-formats-row--4r">
+          <img src="assets/product/4r.png" alt="Model holding a classic 4R portrait print" width="770" height="1376" loading="lazy" decoding="async">
+          <div class="photo-formats-copy">
+            <h3>4R</h3>
+            <p>One favorite shot in a classic print.</p>
+          </div>
+        </div>
+      </section>
     </div>
   </main>
+
+  <dialog class="photo-dialog" aria-label="Photo popup">
+    <form method="dialog"><button type="submit" aria-label="Close photo popup" autofocus>×</button></form>
+  </dialog>
 
   <dialog class="booking-dialog" aria-labelledby="booking-title">
     <h2 id="booking-title"></h2>

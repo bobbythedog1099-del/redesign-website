@@ -1,3 +1,16 @@
+const homeMenu = document.querySelector(".home-menu");
+homeMenu.querySelectorAll("a").forEach((link) => {
+  link.addEventListener("click", () => {
+    homeMenu.open = false;
+  });
+});
+
+homeMenu.addEventListener("keydown", (event) => {
+  if (event.key !== "Escape" || !homeMenu.open) return;
+  homeMenu.open = false;
+  homeMenu.querySelector("summary").focus();
+});
+
 const track = document.querySelector(".viewfinder-track");
 const videos = [...track.querySelectorAll("video")];
 const play = document.querySelector(".camera-play");
@@ -83,11 +96,28 @@ bookingPrints.querySelectorAll(".booking-print").forEach((print) => {
   });
 });
 
-window.addEventListener("load", () => {
-  bookingPrints.classList.add("is-printing");
-}, { once: true });
+if ("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  const bookingMidpoint = bookingPrints.querySelector(".booking-midpoint");
+  const printObserver = new IntersectionObserver(([entry], observer) => {
+    if (!entry.isIntersecting && entry.boundingClientRect.bottom >= 0) return;
 
-document.querySelectorAll(".photo-row").forEach((row) => {
+    bookingPrints.classList.remove("is-awaiting-print");
+    bookingPrints.classList.add("is-printing");
+    observer.disconnect();
+  });
+
+  bookingPrints.classList.add("is-awaiting-print");
+  printObserver.observe(bookingMidpoint);
+}
+
+const photoDialog = document.querySelector(".photo-dialog");
+const photoCollage = document.querySelector(".photo-collage");
+
+photoCollage.addEventListener("click", (event) => {
+  if (event.target.closest(".photo-open")) photoDialog.showModal();
+});
+
+photoCollage.querySelectorAll(".photo-row").forEach((row) => {
   const strip = row.querySelector(".photo-strip");
   const copies = document.createDocumentFragment();
   Array.from(strip.children).forEach((photo) => {
@@ -95,6 +125,7 @@ document.querySelectorAll(".photo-row").forEach((row) => {
     copy.hidden = true;
     copy.classList.add("photo-repeat");
     copy.setAttribute("aria-hidden", "true");
+    copy.querySelector(".photo-open").tabIndex = -1;
     copy.style.setProperty("--tilt", getComputedStyle(photo).getPropertyValue("--tilt"));
     copies.append(copy);
   });

@@ -5,6 +5,19 @@ let entering = false;
 let rotation;
 let touchStartY;
 
+function blockInputDuringTransition(event) {
+  if (!entering) return;
+  if (event.cancelable) event.preventDefault();
+  event.stopImmediatePropagation();
+}
+
+[
+  "wheel", "touchstart", "touchmove", "touchend", "pointerdown", "pointerup",
+  "click", "dblclick", "auxclick", "contextmenu", "keydown", "keyup", "dragstart", "drop",
+].forEach((type) => {
+  window.addEventListener(type, blockInputDuringTransition, { capture: true, passive: false });
+});
+
 async function enterHome() {
   if (entering) return;
   entering = true;
@@ -14,8 +27,8 @@ async function enterHome() {
       { transform: "translate(-50%, -50%) rotate(30deg)" },
       { transform: "translate(-50%, -50%) rotate(0deg)" },
     ], {
-      duration: 760,
-      easing: "cubic-bezier(.22, 1, .36, 1)",
+      duration: 2400,
+      easing: "cubic-bezier(.4, 0, .25, 1)",
       fill: "forwards",
     });
     await rotation.finished;
@@ -25,8 +38,10 @@ async function enterHome() {
 }
 
 window.addEventListener("wheel", (event) => {
-  if (event.deltaY > 0 && !event.ctrlKey) enterHome();
-}, { passive: true });
+  if (event.deltaY <= 0 || event.ctrlKey) return;
+  event.preventDefault();
+  enterHome();
+}, { passive: false });
 
 window.addEventListener("touchstart", (event) => {
   touchStartY = event.touches.length === 1 ? event.touches[0].clientY : undefined;
@@ -57,3 +72,10 @@ window.addEventListener("pageshow", (event) => {
   rotation?.cancel();
   entering = false;
 });
+
+grid.querySelectorAll(".collage-track").forEach((track) => {
+  const copy = track.firstElementChild.cloneNode(true);
+  copy.hidden = true;
+  track.append(copy);
+});
+grid.classList.add("is-moving");
