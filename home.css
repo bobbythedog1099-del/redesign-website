@@ -356,6 +356,7 @@ body.home {
   --photo-gap: clamp(6px, 1.25vw, 12px);
   --photo-radius: clamp(12px, 3vw, 28px);
   --collage-width: min(100vw, 960px);
+  --photo-scale: .43;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   container-type: inline-size;
@@ -364,16 +365,11 @@ body.home {
 }
 
 .photo-row {
-  --photo-scale: .43;
   min-width: 0;
   overflow-x: auto;
   overscroll-behavior-inline: contain;
   scrollbar-width: thin;
   scrollbar-color: #bba98f transparent;
-}
-
-.photo-row--left {
-  --photo-scale: .37;
 }
 
 .photo-track {
@@ -724,7 +720,7 @@ body.home {
 }
 
 .photo-formats {
-  padding: clamp(24px, 4.5vw, 44px) clamp(16px, 4.5vw, 44px) 0;
+  padding: clamp(24px, 4.5vw, 44px) clamp(18px, 9vw, 88px) 0;
   background: #fff;
 }
 
@@ -743,50 +739,41 @@ body.home {
 }
 
 .photo-formats-row {
-  --format-image-height: clamp(190px, 64vw, 555px);
   display: grid;
-  grid-template-columns: minmax(0, 1.16fr) minmax(0, 1fr);
-  align-items: center;
-  gap: clamp(12px, 4.5vw, 44px);
-  padding-block: clamp(8px, 2vw, 18px);
+  gap: clamp(8px, 1.5vw, 14px);
+  padding-block: clamp(12px, 3vw, 28px);
 }
 
 .photo-formats-row + .photo-formats-row {
   border-top: 1px solid #d8b895;
 }
 
-.photo-formats-row--xl {
-  --format-image-height: clamp(260px, 88vw, 760px);
-  grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
-}
-
-.photo-formats-row--reverse {
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.16fr);
-}
-
-.photo-formats-row--4r {
-  --format-image-height: clamp(175px, 55vw, 470px);
-}
-
-.photo-formats-row img {
+.photo-formats-media {
   display: block;
-  justify-self: center;
-  align-self: end;
-  width: auto;
+  width: 100%;
   height: auto;
-  max-width: 100%;
-  max-height: var(--format-image-height);
+  aspect-ratio: 1;
+  border-radius: clamp(12px, 3vw, 28px);
+  object-fit: cover;
+}
+
+.photo-formats-row--xl .photo-formats-media {
+  object-position: center bottom;
+}
+
+.photo-formats-placeholder {
+  aspect-ratio: 9 / 4;
+  background: #f5f2ee;
 }
 
 .photo-formats-copy h3 {
-  font-size: clamp(1.45rem, 7vw, 4.3rem);
+  font-size: clamp(1.45rem, 5.3vw, 3.3rem);
   font-style: italic;
   line-height: 1;
 }
 
 .photo-formats-copy p {
-  max-width: 21ch;
-  margin: .65em 0 0;
-  font-size: clamp(.88rem, 3.55vw, 1.9rem);
+  margin: .25em 0 0;
+  font-size: clamp(.88rem, 3vw, 1.55rem);
   line-height: 1.3;
 }
