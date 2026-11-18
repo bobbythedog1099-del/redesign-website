@@ -199,7 +199,6 @@ const photoRows = Array.from(photoCollage.querySelectorAll(".photo-row"), (row) 
     copy.classList.add("photo-repeat");
     copy.setAttribute("aria-hidden", "true");
     copy.querySelector(".photo-open").tabIndex = -1;
-    copy.style.setProperty("--tilt", getComputedStyle(photo).getPropertyValue("--tilt"));
     copies.append(copy);
   });
   const firstCopy = copies.firstElementChild;

@@ -353,21 +353,27 @@ body.home {
 }
 
 .photo-collage {
-  --photo-gap: clamp(10px, 2.4vw, 22px);
+  --photo-gap: clamp(6px, 1.25vw, 12px);
+  --photo-radius: clamp(12px, 3vw, 28px);
   --collage-width: min(100vw, 960px);
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   container-type: inline-size;
-  gap: clamp(4px, 1.1vw, 12px);
+  gap: 0;
   padding-block: clamp(10px, 2.6vw, 25px);
 }
 
 .photo-row {
+  --photo-scale: .43;
   min-width: 0;
   overflow-x: auto;
   overscroll-behavior-inline: contain;
   scrollbar-width: thin;
   scrollbar-color: #bba98f transparent;
+}
+
+.photo-row--left {
+  --photo-scale: .37;
 }
 
 .photo-track {
@@ -382,7 +388,7 @@ body.home {
   flex-wrap: nowrap;
   gap: var(--photo-gap);
   margin: 0;
-  padding: clamp(10px, 2vw, 18px) var(--photo-gap) clamp(10px, 2vw, 18px) 0;
+  padding: 5px var(--photo-gap) 7px 0;
   list-style: none;
 }
 
@@ -406,18 +412,17 @@ body.home {
 }
 
 .photo-strip li {
-  --tilt: 3deg;
-  --photo-width: calc((var(--collage-width) - 3 * var(--photo-gap)) / 4);
+  --frame-border: clamp(2px, .55vw, 5px);
+  position: relative;
   flex: 0 0 auto;
-  width: var(--photo-width);
-  aspect-ratio: .9;
-  padding: calc(var(--photo-width) * .05) calc(var(--photo-width) * .05) calc(var(--photo-width) * .22);
-  background: linear-gradient(#fff, #f6f4f2);
-  box-shadow: 0 3px 9px #281e143e;
-  transform: rotate(var(--tilt));
+  width: calc(var(--collage-width) * var(--photo-scale));
+  aspect-ratio: 4 / 3;
+  border: var(--frame-border) solid #fff;
+  border-radius: var(--photo-radius);
+  background: #fff;
+  box-shadow: 0 2px 5px #281e1445;
 }
 
-.photo-strip li::after,
 .booking-print::after {
   display: block;
   aspect-ratio: 1788 / 648;
@@ -425,26 +430,10 @@ body.home {
   content: "";
 }
 
-.photo-strip li::after {
-  position: absolute;
-  bottom: calc(var(--photo-width) * .075);
-  left: 50%;
-  width: 26%;
-  transform: translateX(-50%);
-}
-
 @supports (width: 100cqi) {
   .photo-strip li {
-    --photo-width: calc((100cqi - 3 * var(--photo-gap)) / 4);
+    width: calc(100cqi * var(--photo-scale));
   }
-}
-
-.photo-strip li:nth-child(even) {
-  --tilt: -3deg;
-}
-
-.photo-strip li:nth-child(4n + 3) {
-  --tilt: 0deg;
 }
 
 .photo-strip img {
@@ -455,12 +444,13 @@ body.home {
 }
 
 .photo-open {
-  position: relative;
+  position: absolute;
+  inset: 0;
   display: block;
-  width: 100%;
-  height: 100%;
   padding: 0;
   border: 0;
+  border-radius: calc(var(--photo-radius) - var(--frame-border));
+  overflow: hidden;
   background: none;
   cursor: pointer;
 }
