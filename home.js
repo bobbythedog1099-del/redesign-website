@@ -129,25 +129,119 @@ const bookingPrints = document.querySelector(".booking-prints");
 const bookingDialog = document.querySelector(".booking-dialog");
 const bookingTitle = document.querySelector("#booking-title");
 
-bookingPrints.querySelectorAll(".booking-print").forEach((print) => {
+bookingPrints.querySelectorAll(".booking-print[data-booking]").forEach((print) => {
   print.addEventListener("click", () => {
     bookingTitle.textContent = print.dataset.booking;
     bookingDialog.showModal();
   });
 });
 
-if ("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-  const bookingMidpoint = bookingPrints.querySelector(".booking-midpoint");
-  const printObserver = new IntersectionObserver(([entry], observer) => {
-    if (!entry.isIntersecting && entry.boundingClientRect.bottom >= 0) return;
+function setupBookingPrints() {
+  const audio = window.marvinBookingAudio;
+  const midpoint = bookingPrints.querySelector(".booking-midpoint");
+  const startControl = bookingPrints.querySelector(".print-start");
+  const startButton = startControl.querySelector("button");
+  const gestures = new AbortController();
+  const playing = new Map();
+  let context;
+  let recording;
+  let printerOutput;
+  let audioUnavailable = !audio?.supported;
+  let midpointVisible = false;
+  let started = false;
 
+  function printWhenReady() {
+    if (!midpointVisible || started) return;
+
+    if (!audioUnavailable && (!recording || context.state !== "running")) {
+      startControl.hidden = context?.state === "running";
+      return;
+    }
+
+    started = true;
+    startControl.hidden = true;
+    gestures.abort();
+    midpointObserver.disconnect();
     bookingPrints.classList.remove("is-awaiting-print");
     bookingPrints.classList.add("is-printing");
+  }
+
+  async function prepareSound() {
+    if (audioUnavailable || context) return;
+
+    try {
+      context = audio.getContext();
+      context.addEventListener("statechange", printWhenReady);
+      printerOutput = context.createGain();
+      printerOutput.gain.value = 3;
+      printerOutput.connect(context.destination);
+      recording = await audio.loadRecording();
+    } catch {
+      audioUnavailable = true;
+    }
+    printWhenReady();
+  }
+
+  function unlockSound() {
+    if (started || audioUnavailable) return;
+    prepareSound();
+    if (context?.state === "running") {
+      printWhenReady();
+    } else {
+      // Call resume synchronously from the trusted click or keypress.
+      context?.resume().then(printWhenReady, printWhenReady);
+    }
+  }
+
+  function unlockFromPage(event) {
+    if (!event.target.closest?.(".print-start")) unlockSound();
+  }
+
+  ["click", "keydown"].forEach(type => {
+    window.addEventListener(type, unlockFromPage, { capture: true, signal: gestures.signal });
+  });
+  startButton.addEventListener("click", () => {
+    midpointVisible = true;
+    unlockSound();
+  });
+
+  bookingPrints.addEventListener("animationstart", (event) => {
+    if (event.animationName !== "feed-print" || !recording || context.state !== "running") return;
+
+    const source = context.createBufferSource();
+    source.buffer = recording;
+    source.connect(printerOutput);
+    source.start();
+    playing.set(event.target, source);
+  });
+
+  ["animationend", "animationcancel"].forEach(type => {
+    bookingPrints.addEventListener(type, (event) => {
+      if (event.animationName !== "feed-print") return;
+      playing.get(event.target)?.stop();
+      playing.delete(event.target);
+    });
+  });
+
+  const audioObserver = new IntersectionObserver(([entry], observer) => {
+    if (!entry.isIntersecting) return;
     observer.disconnect();
+    prepareSound();
+  }, { rootMargin: "650px 0px" });
+
+  const midpointObserver = new IntersectionObserver(([entry]) => {
+    midpointVisible = entry.isIntersecting;
+    if (midpointVisible) prepareSound();
+    printWhenReady();
   });
 
   bookingPrints.classList.add("is-awaiting-print");
-  printObserver.observe(bookingMidpoint);
+  audioObserver.observe(bookingPrints);
+  midpointObserver.observe(midpoint);
+}
+
+if ("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  setupBookingPrints();
 }
 
 const photoDialog = document.querySelector(".photo-dialog");
@@ -227,6 +321,7 @@ const photoRows = Array.from(photoCollage.querySelectorAll(".photo-row"), (row) 
     photoDialogGallery.replaceChildren(...photos.map((photo, index) => {
       const image = photo.cloneNode();
       image.loading = index === 0 ? "eager" : "lazy";
+      image.src = photo.dataset.fullSrc;
       return image;
     }));
     dialogRow = row;

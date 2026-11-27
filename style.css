@@ -14,6 +14,10 @@ body {
   position: relative;
   isolation: isolate;
   min-height: var(--first-screen);
+  touch-action: pinch-zoom;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .hero-header {
@@ -129,25 +133,41 @@ body {
   content: "";
 }
 
-.scroll-cue {
+.hold-cue {
   position: absolute;
-  top: calc(var(--first-screen) - clamp(22px, 5svh, 54px));
+  bottom: clamp(28px, 6svh, 64px);
   left: 50%;
-  transform: translate(-50%, -100%);
-  border-radius: 100px;
-  padding: .7em 1.3em .7em 1.55em;
-  background: #fff;
+  transform: translateX(-50%);
+  padding: .45em .3em;
   color: inherit;
-  font-size: clamp(.8rem, 3vw, 1.4rem);
+  font-size: clamp(1rem, 4vw, 1.35rem);
   font-weight: 800;
-  letter-spacing: .25em;
+  letter-spacing: .14em;
   text-decoration: none;
+  text-shadow: 0 1px 3px #ffff, 0 0 10px #fff;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
-.scroll-cue:focus-visible {
+.hold-cue:focus-visible {
   outline: 2px solid currentColor;
   outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hold-cue {
+    animation: hold-cue-blink 1.5s ease-in-out infinite alternate;
+  }
+
+  .hero.is-holding .hold-cue,
+  .hold-cue:focus-visible {
+    animation: none;
+  }
+}
+
+@keyframes hold-cue-blink {
+  from { opacity: 1; }
+  to { opacity: .4; }
 }
 
 @media (min-width: 1000px) {

@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en" class="xl-product-page">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>XL Strip | Marvin Studio</title>
+  <link rel="stylesheet" href="home.css?v=34">
+  <style>
+    .xl-product-page {
+      --xl-copy-scale: 1.1;
+      --xl-heading-size: calc(var(--xl-copy-scale) * clamp(2.375rem, calc(1.625rem + 3.5vw), 4rem));
+      overflow-x: hidden;
+      overscroll-behavior-x: none;
+    }
+
+    .xl-hero-header {
+      align-items: center;
+      justify-content: space-between;
+      max-width: 960px;
+      margin-inline: auto;
+      padding: clamp(10px, 2vw, 20px) clamp(18px, 5vw, 48px) 0;
+    }
+
+    .xl-hero-header .home-menu {
+      position: relative;
+      inset: auto;
+      flex: none;
+    }
+
+    .xl-hero-header .home-menu summary span {
+      width: clamp(24px, 6.5vw, 28px);
+      height: 2.5px;
+    }
+
+    .xl-hero-header .home-logo {
+      min-width: 0;
+    }
+
+    .xl-hero-header .home-logo img {
+      max-width: 100%;
+    }
+
+    .xl-product-page .home main {
+      max-width: none;
+      padding-block-end: 80vh;
+    }
+
+    .xl-hero {
+      --hero-gutter: 15px;
+      overflow-x: clip;
+    }
+
+    .xl-hero-image {
+      display: block;
+      /* The lettering spans the central 1014px of the 1122px source. */
+      width: calc((100% - 2 * var(--hero-gutter)) * 1122 / 1014);
+      height: auto;
+      margin-inline-start: 50%;
+      transform: translateX(-50%);
+      object-fit: contain;
+    }
+
+    .xl-hero-copy {
+      position: relative;
+      z-index: 1;
+      margin: clamp(10px, 3vw, 18px) var(--hero-gutter) 0;
+      text-align: center;
+    }
+
+    .xl-hero-copy h1 {
+      margin: 0 0 .25em;
+      font-size: var(--xl-heading-size);
+      font-weight: 900;
+      letter-spacing: -.045em;
+      line-height: 1;
+      text-wrap: balance;
+    }
+
+    .xl-hero-copy p {
+      max-width: 448px;
+      margin: 0 auto;
+      font-size: calc(var(--xl-copy-scale) * clamp(1.125rem, calc(1.05rem + .32vw), 1.25rem));
+      line-height: 1.5;
+      text-wrap: balance;
+    }
+
+    .xl-hero-copy::after {
+      display: block;
+      height: 2px;
+      margin-top: .85rem;
+      margin-inline: calc(45px - var(--hero-gutter));
+      border-radius: 1px;
+      background: #ffcd28;
+      content: "";
+    }
+
+    .xl-finish {
+      --copy-span: 560px;
+      display: grid;
+      margin-block-start: 100px;
+      margin-inline-start: 25px;
+      background: #fff;
+    }
+
+    .xl-finish-image,
+    .xl-finish-copy {
+      grid-area: 1 / 1;
+    }
+
+    .xl-finish-image {
+      display: block;
+      align-self: start;
+      justify-self: end;
+      width: min(75%, 420px);
+      height: auto;
+      margin-block-start: -125px;
+      transform: scaleX(1.05);
+      transform-origin: right center;
+    }
+
+    .xl-finish-copy {
+      --frame-padding: clamp(7px, 2vw, 12px);
+      z-index: 1;
+      align-self: start;
+      width: calc(max(0px, (100% - var(--copy-span)) / 2) + min(56%, var(--copy-span) * .56) + 18px);
+      margin-block-start: calc(20px - var(--frame-padding));
+      margin-inline-start: 12px;
+      padding: var(--frame-padding);
+      padding-inline-start: 8px;
+    }
+
+    .xl-finish-copy h2 {
+      margin: 0 0 .85rem;
+      margin-inline-end: clamp(0px, 25vw - 80px, 18px);
+      font-size: var(--xl-heading-size);
+    }
+
+    .xl-finish-copy h2,
+    .xl-made-copy h2 {
+      font-weight: 900;
+      letter-spacing: -.055em;
+      line-height: 1;
+    }
+
+    .xl-finish-copy h2::after,
+    .xl-made-copy h2::after {
+      display: block;
+      width: 3.25rem;
+      height: 3px;
+      margin-top: .85rem;
+      background: #ffcd28;
+      content: "";
+    }
+
+    .xl-finish-copy p {
+      max-width: 17ch;
+    }
+
+    .xl-finish-copy p,
+    .xl-made-copy p {
+      margin: 0;
+      font-size: calc(var(--xl-copy-scale) * clamp(1rem, calc(.875rem + .4vw), 1.125rem));
+      line-height: 1.35;
+    }
+
+    .xl-made {
+      display: grid;
+      width: min(100%, 640px);
+      margin: 0 auto;
+      overflow: hidden;
+      container-type: inline-size;
+      background: #fff;
+    }
+
+    .xl-made-image,
+    .xl-made-copy {
+      grid-area: 1 / 1;
+    }
+
+    .xl-made-image {
+      display: block;
+      align-self: end;
+      width: 100%;
+      height: auto;
+      transform: translateX(-25%);
+      mask-image: linear-gradient(to right, #000 94%, transparent);
+    }
+
+    .xl-made-copy {
+      z-index: 1;
+      align-self: start;
+      justify-self: end;
+      width: 44%;
+      margin: clamp(18px, 6cqi, 38px) 3.5% 1.5rem 0;
+    }
+
+    .xl-made-copy h2 {
+      margin: 0 0 .75rem;
+      font-size: var(--xl-heading-size);
+    }
+
+    .xl-made-copy p {
+      max-width: 26ch;
+    }
+  </style>
+</head>
+<body class="home">
+  <header class="home-header xl-hero-header">
+    <a class="home-logo" href="home.html" aria-label="Marvin Studio home">
+      <img src="assets/marvin-logo-lossless.webp" alt="Marvin Studio" width="1788" height="648">
+    </a>
+    <details class="home-menu">
+      <summary aria-label="Navigation menu">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </summary>
+      <nav aria-label="Main navigation">
+        <a href="home.html">Home</a>
+        <a href="home.html#photo-formats-title">Photo Formats</a>
+        <a href="home.html#booking">Booking</a>
+      </nav>
+    </details>
+  </header>
+
+  <main>
+    <section class="xl-hero" aria-labelledby="xl-hero-title">
+      <img class="xl-hero-image" src="assets/product-section/hero-xlstrip.png" alt="A model holding the XL Strip in front of oversized ICONIC lettering" width="1122" height="1402" fetchpriority="high">
+      <div class="xl-hero-copy">
+        <h1 id="xl-hero-title">Meet the XL Strip.</h1>
+        <p>Oversized, customisable, and <strong>impossible to miss</strong>. Frame your favourite moments and carry an iconic statement wherever you go.</p>
+      </div>
+    </section>
+
+    <section class="xl-finish" aria-labelledby="xl-finish-title">
+      <img class="xl-finish-image" src="assets/product-section/finished-with-intention.png" alt="Close-up of the clear XL Strip tote, loop handles, and snap closure" width="1024" height="1536" loading="lazy" decoding="async">
+      <div class="xl-finish-copy">
+        <h2 id="xl-finish-title">Finished with<br>intention.</h2>
+        <p>A premium finish, down to the details. Our durable PVC tote features a refined matte surface that gives your XL Strip a look as distinctive as the moments inside.</p>
+      </div>
+    </section>
+
+    <section class="xl-made" aria-labelledby="xl-made-title">
+      <img class="xl-made-image" src="assets/product-section/made-to-be-seen-white.png" alt="A model carrying the XL Strip tote with four portrait prints" width="1024" height="1536" loading="lazy" decoding="async">
+      <div class="xl-made-copy">
+        <h2 id="xl-made-title">Made to<br>be seen.</h2>
+        <p>More than a photo strip—it’s part of your look. Designed to stand out, the XL Strip turns your favourite moments into a statement you can take anywhere.</p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
