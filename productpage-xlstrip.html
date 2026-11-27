@@ -73,7 +73,6 @@
       font-weight: 900;
       letter-spacing: -.045em;
       line-height: 1;
-      text-wrap: balance;
     }
 
     .xl-hero-copy p {
@@ -94,73 +93,23 @@
       content: "";
     }
 
-    .xl-finish {
-      --copy-span: 560px;
-      display: grid;
-      margin-block-start: 100px;
-      margin-inline-start: 25px;
-      background: #fff;
-    }
-
-    .xl-finish-image,
-    .xl-finish-copy {
-      grid-area: 1 / 1;
-    }
-
-    .xl-finish-image {
-      display: block;
-      align-self: start;
-      justify-self: end;
-      width: min(75%, 420px);
-      height: auto;
-      margin-block-start: -125px;
-      transform: scaleX(1.05);
-      transform-origin: right center;
-    }
-
-    .xl-finish-copy {
-      --frame-padding: clamp(7px, 2vw, 12px);
-      z-index: 1;
-      align-self: start;
-      width: calc(max(0px, (100% - var(--copy-span)) / 2) + min(56%, var(--copy-span) * .56) + 18px);
-      margin-block-start: calc(20px - var(--frame-padding));
-      margin-inline-start: 12px;
-      padding: var(--frame-padding);
-      padding-inline-start: 8px;
-    }
-
-    .xl-finish-copy h2 {
-      margin: 0 0 .85rem;
-      margin-inline-end: clamp(0px, 25vw - 80px, 18px);
-      font-size: var(--xl-heading-size);
-    }
-
     .xl-finish-copy h2,
-    .xl-made-copy h2 {
+    .xl-made-copy h2,
+    .xl-moments-copy h2 {
       font-weight: 900;
       letter-spacing: -.055em;
       line-height: 1;
     }
 
     .xl-finish-copy h2::after,
-    .xl-made-copy h2::after {
+    .xl-made-copy h2::after,
+    .xl-moments-copy h2::after {
       display: block;
       width: 3.25rem;
       height: 3px;
       margin-top: .85rem;
       background: #ffcd28;
       content: "";
-    }
-
-    .xl-finish-copy p {
-      max-width: 17ch;
-    }
-
-    .xl-finish-copy p,
-    .xl-made-copy p {
-      margin: 0;
-      font-size: calc(var(--xl-copy-scale) * clamp(1rem, calc(.875rem + .4vw), 1.125rem));
-      line-height: 1.35;
     }
 
     .xl-made {
@@ -190,17 +139,104 @@
       z-index: 1;
       align-self: start;
       justify-self: end;
-      width: 44%;
-      margin: clamp(18px, 6cqi, 38px) 3.5% 1.5rem 0;
+      width: 47%;
+      margin: clamp(1.75rem, 11cqi, 4.5rem) 2.5% 1.5rem 0;
     }
 
     .xl-made-copy h2 {
-      margin: 0 0 .75rem;
-      font-size: var(--xl-heading-size);
+      margin: 0 0 clamp(.65rem, 3.2cqi, 1.25rem);
+      font-size: clamp(1.75rem, 10.5cqi, 4.25rem);
+      line-height: .96;
+    }
+
+    .xl-made-copy h2::after {
+      width: 17cqi;
+      height: clamp(3px, 1cqi, 6px);
+      margin-top: clamp(.5rem, 2.4cqi, 1rem);
     }
 
     .xl-made-copy p {
       max-width: 26ch;
+      margin: 0;
+      font-size: clamp(1rem, 3.9cqi, 1.5rem);
+      line-height: 1.15;
+    }
+
+    .xl-moments,
+    .xl-finish {
+      display: grid;
+      width: min(100%, 640px);
+      margin-inline: auto;
+      container-type: inline-size;
+      background: #fff;
+    }
+
+    .xl-moments-image,
+    .xl-moments-copy,
+    .xl-finish-image,
+    .xl-finish-copy {
+      grid-area: 1 / 1;
+    }
+
+    .xl-moments-image,
+    .xl-finish-image {
+      display: block;
+      align-self: end;
+      width: 100%;
+      height: auto;
+    }
+
+    .xl-moments-copy,
+    .xl-finish-copy {
+      z-index: 1;
+      align-self: start;
+    }
+
+    .xl-moments-copy {
+      margin: 8% 8.75% 0;
+      /* Reserve the lower part of the photo for the subjects if the copy wraps. */
+      margin-block-end: calc(96% + .5rem);
+    }
+
+    .xl-moments-copy h2,
+    .xl-finish-copy h2 {
+      margin: 0 0 clamp(.65rem, 2.6cqi, 1rem);
+      font-size: clamp(1.75rem, 10cqi, 4rem);
+      line-height: .94;
+    }
+
+    .xl-moments-copy h2::after,
+    .xl-finish-copy h2::after {
+      height: clamp(3px, 1.15cqi, 7px);
+      margin-top: clamp(.5rem, 2.75cqi, 1.15rem);
+    }
+
+    .xl-moments-copy h2::after {
+      width: 16.25cqi;
+    }
+
+    .xl-moments-copy p {
+      max-width: 74cqi;
+      margin: 0;
+      font-size: clamp(1rem, 3.65cqi, 1.5rem);
+      line-height: 1.2;
+    }
+
+    .xl-finish-copy {
+      margin: 7% 6.25% 0;
+      /* Keep the portrait and tote below the copy when it grows on narrow screens. */
+      margin-block-end: calc(62% + .5rem);
+    }
+
+    .xl-finish-copy h2::after {
+      width: 13.5cqi;
+    }
+
+    .xl-finish-copy p {
+      max-width: max(8rem, 38cqi);
+      margin: 0;
+      font-size: clamp(1rem, 3.1cqi, 1.25rem);
+      line-height: 1.18;
     }
   </style>
 </head>
@@ -232,19 +268,27 @@
       </div>
     </section>
 
+    <section class="xl-made" aria-labelledby="xl-made-title">
+      <img class="xl-made-image" src="assets/product-section/made-to-be-seen-white.png" alt="A model carrying the XL Strip tote with four portrait prints" width="1024" height="1536" loading="lazy" decoding="async">
+      <div class="xl-made-copy">
+        <h2 id="xl-made-title">Made to<br>be seen.</h2>
+        <p>More than a photo strip—<wbr>it’s part of your look. Designed to stand out, the XL Strip turns your favourite moments into a statement you can take anywhere.</p>
+      </div>
+    </section>
+
+    <section class="xl-moments" aria-labelledby="xl-moments-title">
+      <img class="xl-moments-image" src="assets/product-section/some-moment-desserve-xl.png" alt="Two friends holding an XL Strip tote with four photos of their moments together" width="1024" height="1536" loading="lazy" decoding="async">
+      <div class="xl-moments-copy">
+        <h2 id="xl-moments-title">Some moments<br>deserve XL.</h2>
+        <p>For the people who mean the most, make your moments together impossible to forget. The XL Strip turns them into a larger-than-life keepsake you’ll love looking back on, again and again.</p>
+      </div>
+    </section>
+
     <section class="xl-finish" aria-labelledby="xl-finish-title">
       <img class="xl-finish-image" src="assets/product-section/finished-with-intention.png" alt="Close-up of the clear XL Strip tote, loop handles, and snap closure" width="1024" height="1536" loading="lazy" decoding="async">
       <div class="xl-finish-copy">
         <h2 id="xl-finish-title">Finished with<br>intention.</h2>
         <p>A premium finish, down to the details. Our durable PVC tote features a refined matte surface that gives your XL Strip a look as distinctive as the moments inside.</p>
-      </div>
-    </section>
-
-    <section class="xl-made" aria-labelledby="xl-made-title">
-      <img class="xl-made-image" src="assets/product-section/made-to-be-seen-white.png" alt="A model carrying the XL Strip tote with four portrait prints" width="1024" height="1536" loading="lazy" decoding="async">
-      <div class="xl-made-copy">
-        <h2 id="xl-made-title">Made to<br>be seen.</h2>
-        <p>More than a photo strip—it’s part of your look. Designed to stand out, the XL Strip turns your favourite moments into a statement you can take anywhere.</p>
       </div>
     </section>
   </main>
